@@ -1,0 +1,15 @@
+.vscode/
+
+# Essentials for C/C++ projects
+/.vscode/
+/demo/physics_demo
+*.o
+*.obj
+*.out
+*.exe
+*.a
+*.lib
+*.so
+*.dylib
+.DS_Store
+compile_commands.json

@@ -86,6 +86,62 @@ Manifold Collision::CheckBoxCollision(RigidBody* bodyA, RigidBody* bodyB){
     return m;
 }
 
+
+Manifold Collision::CheckBoxCircleCollision(RigidBody* boxBody, RigidBody* circleBody){
+
+    Manifold m;
+    m.bodyA = boxBody;
+    m.bodyB = circleBody;
+    m.isColliding = false;
+
+    Box* box = dynamic_cast<Box*>(boxBody->shape);
+    Circle* circle = dynamic_cast<Circle*>(circleBody->shape);
+
+    // position of circle relative to box center (in box local coords)
+    Vec2 local = circleBody->position - boxBody->position;
+
+    Vec2 closest = local;
+
+    closest.x = std::clamp(closest.x , -box->halfWidth , box->halfWidth);
+    closest.y = std::clamp(closest.y, -box->halfHeight, box->halfHeight);
+
+    bool inside = false;
+
+        if (local.x == closest.x && local.y == closest.y) {
+        inside = true;
+           if (std::abs(local.x) > std::abs(local.y)) {
+               closest.x = (closest.x > 0) ? box->halfWidth : -box->halfWidth;
+           } else {
+               closest.y = (closest.y > 0) ? box->halfHeight : -box->halfHeight;
+           }
+    }
+
+        Vec2 normal = local - closest;
+        float d = normal.LenghtSquared();
+        float r = circle->radius;
+
+    if (d > r * r && !inside) {
+        return m;
+    }
+
+    d = std::sqrt(d);
+
+    if (inside) {
+        m.penetration = r + d;
+        // ensure normal is set even if distance is zero
+        if (d > 0.000001f) m.normal = normal / d;
+        else m.normal = Vec2(1, 0);
+    } else {
+        m.normal = normal / d;
+        m.penetration = r - d;
+    }
+
+    m.isColliding = true;
+    return m;
+
+}
+
+
 void Collision::ResolveCollision(const Manifold& m){
 
     RigidBody* A = m.bodyA;
