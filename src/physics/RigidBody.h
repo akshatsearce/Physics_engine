@@ -18,10 +18,11 @@ public:
     float mass;
     float inverseMass;
     float restitution;
+    float friction;
 
     Shape* shape;
 
-    RigidBody(Shape* shape, float x, float y, float mass, float restitution);
+    RigidBody(Shape* shape, float x, float y, float mass, float restitution, float friction = 0.1f);
 
     void ApplyForce(const Vec2& f);
     void Integrate(float dt);

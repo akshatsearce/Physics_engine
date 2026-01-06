@@ -1,12 +1,13 @@
 #include "RigidBody.h"
 
-RigidBody::RigidBody(Shape* shape, float x, float y, float mass, float restitution) {
+RigidBody::RigidBody(Shape* shape, float x, float y, float mass, float restitution, float friction) {
     this->shape = shape;
     this->position = Vec2(x, y);
     this->velocity = Vec2(0, 0);
     this->force = Vec2(0, 0);
     this->mass = mass;
     this->restitution = restitution;
+    this->friction = friction;
 
     if (mass != 0.0f) {
         this->inverseMass = 1.0f / mass;

@@ -6,11 +6,14 @@
 class Box : public Shape{
 
     public:
-    float breath, height;
+    float width, height;
+    float halfWidth, halfHeight;
 
-    Box(float b, float h): Shape(ShapeType::BOX){
-        breath = b;
+    Box(float w, float h): Shape(ShapeType::BOX){
+        width = w;
         height = h;
+        halfWidth = w*0.5f;
+        halfHeight = h*0.5f;
     }
 
 };

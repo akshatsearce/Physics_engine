@@ -19,6 +19,8 @@ class Collision{
 
     static Manifold CheckCircleCollision(RigidBody* bodyA, RigidBody* bodyB);
 
+    static Manifold CheckBoxCollision(RigidBody* a, RigidBody* b);
+
     static void ResolveCollision(const Manifold& m);
 
     static void PositionalCorrection(const Manifold& m);
